@@ -8,19 +8,20 @@ const Home = (props) => {
     const { authState, oktaAuth } = props
     const dispatch = useContext(EventContext);
     useEffect(() => {
-        const checkLogin = async()=>{
-            if(!oktaAuth) return
-            const tokenManager = oktaAuth.tokenManager;
-            const accessToken = await tokenManager.get('accessToken');
-            const idToken = await tokenManager.get('idToken');
-            // const userInfo = await oktaAuth.token.getUserInfo()
-            if(!accessToken || !idToken){
-                await oktaAuth.signInWithRedirect()
-            }
-        }
-        checkLogin().then(()=>{
+        // const checkLogin = async()=>{
+        //     if(!oktaAuth) return
+        //     const tokenManager = oktaAuth.tokenManager;
+        //     const accessToken = await tokenManager.get('accessToken');
+        //     const idToken = await tokenManager.get('idToken');
+        //     // const userInfo = await oktaAuth.token.getUserInfo()
+        //     if(!accessToken || !idToken){
+        //         console.log('run rurnun')
+        //         await oktaAuth.signInWithRedirect()
+        //     }
+        // }
+        // checkLogin().then(()=>{
 
-        }).catch((e)=>{console.log(e)})
+        // }).catch((e)=>{console.log(e)})
         
     }, [])
     useEffect(() => {
@@ -45,7 +46,7 @@ const Home = (props) => {
     return (
         <Styled styles={styles}>
                 <div className='row'>
-                    <div className='header-title'>{`Hello ${authState?.users?.given_name || ''}`}</div>
+                    <div className='header-title'>{`Hello ${authState?.users?.name || ''}`}</div>
                     <button className='button' onClick={handleClick}>
                         {authState?.isAuthenticated ? 'Logout' : 'Login'}
                     </button>

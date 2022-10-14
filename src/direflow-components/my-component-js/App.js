@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { EventContext, Styled } from 'direflow-component';
 import { BrowserRouter as Router, withRouter, Route } from 'react-router-dom'
-import { LoginCallback, Security } from '@okta/okta-react';
+import { LoginCallback, Security,SecureRoute } from '@okta/okta-react';
 import {
   toRelativeUrl,
 } from '@okta/okta-auth-js';
@@ -15,13 +15,13 @@ const App = (props) => {
   const authClient = useMemo(()=> main(clientId, issuer, redirectUri),[])
   
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
-    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    history.replace(toRelativeUrl('/', window.location.origin));
   };
 
   return (
     <div className='app'>
       <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
-        <Home />
+        <SecureRoute path="/" component={Home} />
         <Route path="/login/callback" component={LoginCallback} />
       </Security>
     </div>
